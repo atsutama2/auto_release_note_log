@@ -47,7 +47,7 @@ jobs:
         run: |
           API_URL="https://api.github.com/repos/${ORGANIZATION}/${RELEASED_REPOSITORY}/pulls/${PR_NUMBER}"
 
-          PR_DATA=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" $API_URL)
+          PR_DATA=$(curl -H "Authorization: token ${{ secrets.ACTIONS_TOKEN }}" $API_URL)
           echo PR_TITLE=$(echo "$PR_DATA" | jq -r '.title') >> $GITHUB_ENV
           PR_BODY=$(echo "$PR_DATA" | jq -r '.body')
 
@@ -66,7 +66,7 @@ jobs:
 
           for PR_NUM in "${PR_NUMBERS_ARRAY[@]}"; do
             PR_API_URL="https://api.github.com/repos/${ORGANIZATION}/${RELEASED_REPOSITORY}/pulls/${PR_NUM}"
-            PR_DETAILS=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" $PR_API_URL)
+            PR_DETAILS=$(curl -H "Authorization: token ${{ secrets.ACTIONS_TOKEN }}" $PR_API_URL)
             PR_TITLE=$(echo "$PR_DETAILS" | jq -r '.title')
             PR_URL=$(echo "$PR_DETAILS" | jq -r '.html_url')
             PR_AUTHOR=$(echo "$PR_DETAILS" | jq -r '.user.login')
